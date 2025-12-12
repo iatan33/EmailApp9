@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Головна пошта</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+
+    <style>
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: #ffffff;
+            padding: 30px 20px;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-color);
+            border: 1px solid #eee;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 140px;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(74, 144, 226, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .icon-large {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .card-compose {
+            background: linear-gradient(135deg, var(--primary-color), #357abd);
+            color: white !important;
+            border: none;
+        }
+        .card-compose:hover {
+            box-shadow: 0 10px 20px rgba(74, 144, 226, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📬 Поштовий Клієнт</h1>
+
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+    <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+    <div style="text-align: center; margin-bottom: 40px; color: #666;">
+        Вітаємо, <strong style="color: var(--primary-color); font-size: 1.1em;" th:text="${username}">User</strong>!
+    </div>
+
+    <div class="dashboard-grid">
+        <a th:href="@{/mail/new}" class="stat-card card-compose">
+            <span class="icon-large">✏️</span>
+            <span class="card-title">Написати листа</span>
+        </a>
+
+        <a th:href="@{/mail/inbox}" class="stat-card">
+            <span class="icon-large">📥</span>
+            <span class="card-title">Вхідні</span>
+        </a>
+
+        <a th:href="@{/mail/sent}" class="stat-card">
+            <span class="icon-large">📤</span>
+            <span class="card-title">Відправлені</span>
+        </a>
+
+        <a th:href="@{/mail/drafts}" class="stat-card">
+            <span class="icon-large">📝</span>
+            <span class="card-title">Чернетки</span>
+        </a>
+    </div>
+
+    <form th:action="@{/logout}" method="post" style="margin-top: 50px; text-align: center;">
+        <button type="submit" class="btn-secondary" style="padding: 10px 30px; width: auto;">
+            Вийти з акаунту
+        </button>
+    </form>
+</div>
+
+</body>
+</html>

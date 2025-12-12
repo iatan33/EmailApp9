@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${mail.id == 0 ? 'Новий лист' : 'Редагувати чернетку'}">Email</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<div class="container">
+    <h1 th:text="${mail.id == 0 ? '✉️ Новий лист' : '✏️ Редагування'}">Новий лист</h1>
+
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+    <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+    <form th:action="@{/mail/saveDraft}" th:object="${mail}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{sender}" />
+
+        <div class="form-group">
+            <label>Відправник:</label>
+            <input type="text" th:value="*{sender}" readonly style="background-color: #eee; color: #555; cursor: not-allowed;"/>
+        </div>
+
+        <div class="form-group">
+            <label for="receiver">Отримувач:</label>
+            <input type="email" id="receiver" th:field="*{receiver}" placeholder="name@example.com" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="subject">Тема:</label>
+            <input type="text" id="subject" th:field="*{subject}" placeholder="Про що цей лист?"/>
+        </div>
+
+        <div class="form-group">
+            <label for="body">Текст:</label>
+            <textarea id="body" th:field="*{body}" rows="12" placeholder="Ваше повідомлення..."></textarea>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button type="submit" class="btn-secondary">💾 У чернетки</button>
+            <button type="submit" formaction="/mail/send" formmethod="post">🚀 Відправити</button>
+        </div>
+    </form>
+
+    <div style="margin-top: 20px; text-align: center;">
+        <a href="/home" style="color: #888;">Скасувати і повернутися</a>
+    </div>
+</div>
+
+</body>
+</html>

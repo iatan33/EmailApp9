@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${folderName}">Поштова Скринька</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<div class="container" style="max-width: 1000px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h1 th:text="${folderName}" style="margin: 0;">Папка</h1>
+        <a th:href="@{/home}" class="btn btn-secondary" style="width: auto; margin: 0;">🏠 На головну</a>
+    </div>
+
+    <div th:if="${mails.isEmpty()}" class="alert alert-error" style="text-align: center;">
+        <p th:text="'У папці &quot;' + ${folderName} + '&quot; порожньо.'"></p>
+    </div>
+
+    <div th:unless="${mails.isEmpty()}">
+        <table>
+            <thead>
+            <tr>
+                <th th:text="${folderType == 'inbox' ? 'Відправник' : 'Отримувач'}">Контрагент</th>
+                <th>Тема</th>
+                <th>Дата</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="mail : ${mails}"
+                th:onclick="|window.location.href='@{${folderType == 'drafts' ? '/mail/drafts/' : '/mail/'} + ${mail.id}}'|">
+
+                <td th:if="${folderType == 'inbox'}" th:text="${mail.sender}"></td>
+                <td th:if="${folderType == 'sent' or folderType == 'drafts'}" th:text="${mail.receiver}"></td>
+
+                <td th:text="${mail.subject}"></td>
+                <td><span th:text="${#temporals.format(mail.createdAt, 'dd-MM-yyyy HH:mm')}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin-top: 20px; text-align: right;">
+        <a th:href="@{/mail/new}" class="btn" style="width: auto;">+ Новий лист</a>
+    </div>
+</div>
+
+</body>
+</html>

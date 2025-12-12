@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Вхід</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<div class="container" style="max-width: 400px;"> <h1>🔐 Вхід</h1>
+
+    <div th:if="${param.error}" class="alert alert-error">
+        Невірне ім'я користувача або пароль.
+    </div>
+
+    <form th:action="@{/login}" method="post">
+        <div class="form-group">
+            <label>Користувач:</label>
+            <input type="text" name="username" placeholder="Введіть логін" required/>
+        </div>
+        <div class="form-group">
+            <label>Пароль:</label>
+            <input type="password" name="password" placeholder="Введіть пароль" required/>
+        </div>
+        <div>
+            <button type="submit">Увійти</button>
+        </div>
+    </form>
+
+    <div style="text-align: center; margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px;">
+        <p style="margin-bottom: 10px; color: #888;">Або увійдіть через:</p>
+        <a th:href="@{/oauth2/authorization/google}" style="text-decoration: none;">
+            <button type="button" style="background: #db4437;">G Увійти через Google</button>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${mail.subject}">Перегляд листа</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<div class="container">
+    <div style="border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 20px;">
+        <h1 th:text="${mail.subject}" style="text-align: left; margin-bottom: 10px;">Тема</h1>
+        <div style="display: flex; justify-content: space-between; color: #666;">
+            <div>
+                <p style="margin: 5px 0;"><strong>Від:</strong> <span th:text="${mail.sender}"></span></p>
+                <p style="margin: 5px 0;"><strong>До:</strong> <span th:text="${mail.receiver}"></span></p>
+            </div>
+            <div style="text-align: right;">
+                <p style="margin: 5px 0;" th:text="${#temporals.format(mail.createdAt, 'dd-MM-yyyy HH:mm')}"></p>
+            </div>
+        </div>
+    </div>
+
+    <div style="white-space: pre-wrap; min-height: 200px; line-height: 1.6;" th:text="${mail.body}">
+        Текст листа
+    </div>
+
+    <div style="border-top: 1px solid #eee; margin-top: 30px; padding-top: 20px; text-align: center;">
+        <a th:href="@{/home}" class="btn btn-secondary" style="width: auto;">🔙 На головну</a>
+    </div>
+</div>
+
+</body>
+</html>
